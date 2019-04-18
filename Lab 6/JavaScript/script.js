@@ -2,7 +2,7 @@ function getAPIUrl(method, params)
 {
 	if (!method) throw new Error('Method is not specified')
 	params = params || {};
-	params['access_token'] = 'd237e740d237e740d237e74072d25f821cdd237d237e7408e64c59f1c5adbb97dcb1058';
+	params['access_token'] = 'c3338965c3338965c333896532c35998aecc333c33389659f8b34f1caa2baa02b332e1e';
 
 	return 'https://api.vk.com/method/' + method + '?' + $.param(params) + '&v=5.52';
 }
@@ -27,6 +27,8 @@ function showList()
 		});
 }
 
+let isListShown = false;
+
 function showListRandom()
 {
 	var filmTag = tag.value;
@@ -40,6 +42,13 @@ function showListRandom()
 function showListHTML(films, xTag)
 {
 	var html = '';
+
+	if (isListShown) 
+	{
+		$('.li').remove();
+		isListShown = false;
+	}
+
 	for (var i = 0; i < films.length; i++)
 	{
 		if (xTag === '')
@@ -60,7 +69,7 @@ function showListHTML(films, xTag)
 			var isFilmFiltered = ((films[i].text.indexOf("Страна:") >= 0)
 					&& (films[i].text.indexOf("Жанр:"))
 					&& (films[i].text.indexOf("Рейтинги:")))
-					&& (films[i].text.indexOf("#" + xTag + "@xfilm") >= 0);
+					&& (films[i].text.indexOf("#" + xTag.toLowerCase() + "@xfilm") >= 0);
 
 			if (isFilmFiltered)
 			{
@@ -80,15 +89,23 @@ function showListHTML(films, xTag)
 	$('ul img').css("width", "100%");
 	$('ul .photo').css('width', '20%');
 	$('ul .desc').css("font-size", "18px").css('width', '70%').css('font-size', '20px');
+
+	isListShown = true;
 }
 
 function getRandomFilms(films)
 {
 	var html = '';
 
+	if (isListShown) 
+	{
+		$('.li').remove();
+		isListShown = false;
+	}
+
 	for (var i = 0; i < films.length; i++)
 	{
-		var randomValue = Math.round(getRandom());
+		var randomValue = Math.round(Math.random(0, 2));
 
 		if (randomValue === 1)
 		{
@@ -114,11 +131,8 @@ function getRandomFilms(films)
 			$('ul img').css("width", "100%");
 			$('ul .photo').css('width', '20%');
 			$('ul .desc').css("font-size", "18px").css('width', '70%').css('font-size', '20px');
+
+			isListShown = true;
 		}
 	}
-}
-
-function getRandom()
-{
-	return Math.random(0, 2);
 }
