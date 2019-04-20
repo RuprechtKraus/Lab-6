@@ -5,10 +5,12 @@
 	<title>Топ фильмов</title>
 	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="JavaScript/script.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 	<!-- <input type="text" id="tag"> -->
 	<select id="tag">
+		<option>Все</option>
 		<option>Драма</option>
 		<option>Мелодрама</option>
 		<option>Комедия</option>
@@ -21,7 +23,7 @@
 	<button id="show">Show list</button>
 	<button id="random">Random</button>
 
-	<ul style="width: 80%; display: block; margin-left: auto; margin-right: auto;"></ul>
+	<ul class="filmsList"></ul>
 
 	<script>$('#show').on('click', showList)</script>
 	<script>$('#random').on('click', showListRandom)</script>

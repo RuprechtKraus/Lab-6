@@ -27,8 +27,6 @@ function showList()
 		});
 }
 
-let isListShown = false;
-
 function showListRandom()
 {
 	var filmTag = tag.value;
@@ -43,15 +41,15 @@ function showListHTML(films, xTag)
 {
 	var html = '';
 
-	if (isListShown) 
+
+	if ($('ul.filmsList').find('li').children().length)
 	{
 		$('.li').remove();
-		isListShown = false;
 	}
 
 	for (var i = 0; i < films.length; i++)
 	{
-		if (xTag === '')
+		if (xTag === 'Все')
 		{
 			var isFilmFiltered = ((films[i].text.indexOf("Страна:") >= 0)
 					&& (films[i].text.indexOf("Жанр:"))
@@ -59,9 +57,12 @@ function showListHTML(films, xTag)
 
 			if (isFilmFiltered)
 			{
-				var f = films[i];
-				html += '<li>' + '<div class="filmBlock">' + '<div class="photo">' + '<img src="' + f.attachments[0].photo.photo_604 + '" />' + '</div>' + '<div class="desc">' + f.text + '</div>' + '<div class="likePost">' + '<div class="like">♥' + f.likes.count + '</div>'
-				+ '<a href="https://vk.com/public26750264?w=wall' + f.owner_id + '_' + f.id + '">Original post</a>' + '</div>' + '</div>' + '</li>';
+				var film = films[i];
+				if (film.attachments[0].photo)
+				{
+					html += '<li>' + '<div class="filmBlock">' + '<div class="photo">' + '<img src="' + film.attachments[0].photo.photo_604 + '" />' + '</div>' + '<div class="desc">' + film.text + '</div>' + '<div class="likePost">' + '<div class="like">♥' + film.likes.count + '</div>'
+					+ '<a href="https://vk.com/public26750264?w=wall' + film.owner_id + '_' + film.id + '">Original post</a>' + '</div>' + '</div>' + '</li>';
+				}
 			}
 		}
 		else
@@ -73,22 +74,17 @@ function showListHTML(films, xTag)
 
 			if (isFilmFiltered)
 			{
-				var f = films[i];
-				html += '<li>' + '<div class="filmBlock">' + '<div class="photo">' + '<img src="' + f.attachments[0].photo.photo_604 + '" />' + '</div>' + '<div class="desc">' + f.text + '</div>' + '<div class="likePost">' + '<div class="like">♥' + f.likes.count + '</div>'
-				+ '<a href="https://vk.com/public26750264?w=wall' + f.owner_id + '_' + f.id + '">Original post</a>' + '</div>' + '</div>' + '</li>';
+				var film = films[i];
+				if (film.attachments[0].photo)
+				{
+					html += '<li>' + '<div class="filmBlock">' + '<div class="photo">' + '<img src="' + film.attachments[0].photo.photo_604 + '" />' + '</div>' + '<div class="desc">' + film.text + '</div>' + '<div class="likePost">' + '<div class="like">♥' + film.likes.count + '</div>'
+					+ '<a href="https://vk.com/public26750264?w=wall' + film.owner_id + '_' + film.id + '">Original post</a>' + '</div>' + '</div>' + '</li>';
+				}
 			}
 		}
 	}
 
 	$('ul').html(html);
-	$('ul li').css('padding', '30px 0px').css('list-style', 'none');
-	$('ul .filmBlock').css('display', 'flex').css('justify-content', 'space-around').css('flex-wrap', 'wrap');
-	$('ul .like').css('font-size', '30px');
-	$('ul a').css('text-decoration', 'none').css('color', '#0029ff').css('font-size', '30px');
-	$('ul .likePost').css('width', '100%').css('margin-left', '40px');
-	$('ul img').css("width", "100%");
-	$('ul .photo').css('width', '20%');
-	$('ul .desc').css("font-size", "18px").css('width', '70%').css('font-size', '20px');
 
 	isListShown = true;
 }
@@ -97,10 +93,9 @@ function getRandomFilms(films)
 {
 	var html = '';
 
-	if (isListShown) 
+	if ($('ul.filmsList').find('li').children().length)
 	{
 		$('.li').remove();
-		isListShown = false;
 	}
 
 	for (var i = 0; i < films.length; i++)
@@ -123,14 +118,6 @@ function getRandomFilms(films)
 			}
 
 			$('ul').html(html);
-			$('ul li').css('padding', '30px 0px').css('list-style', 'none');
-			$('ul .filmBlock').css('display', 'flex').css('justify-content', 'space-around').css('flex-wrap', 'wrap');
-			$('ul .like').css('font-size', '30px');
-			$('ul a').css('text-decoration', 'none').css('color', '#0029ff').css('font-size', '30px');
-			$('ul .likePost').css('width', '100%').css('margin-left', '40px');
-			$('ul img').css("width", "100%");
-			$('ul .photo').css('width', '20%');
-			$('ul .desc').css("font-size", "18px").css('width', '70%').css('font-size', '20px');
 
 			isListShown = true;
 		}
